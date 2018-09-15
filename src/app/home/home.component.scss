@@ -1,0 +1,23 @@
+@import "../../variables";
+
+app-home {
+	.main-content {
+		width: 100%;
+		min-height: 40vh;
+		background-color: map_get($colors, primary);
+	}
+	
+	.title {
+		color: white;
+		text-align: center;
+		font-size: 50px;
+		padding-top: 30px;
+	}
+	
+	.url-shortener-container{
+		width: 70%;
+		height: 100%;
+		min-width: 280px;
+		margin: 50px auto 0 auto;
+	}
+}

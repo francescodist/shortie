@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+@import "app/home/home.component";
+@import "app/url-shortener/url-shortener.component";
+
+body {
+	margin: 0;
+	font-family: Avenir;
+}
+
+* {
+	color: map_get($colors, darkText);
+}
