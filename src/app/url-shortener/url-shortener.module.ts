@@ -1,11 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { UrlShortenerComponent } from './url-shortener.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {UrlShortenerComponent} from './url-shortener.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: [UrlShortenerComponent]
+    imports: [
+        CommonModule,
+        FormsModule,
+    ],
+    declarations: [UrlShortenerComponent]
 })
-export class UrlShortenerModule { }
+export class UrlShortenerModule {
+}

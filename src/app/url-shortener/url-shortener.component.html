@@ -1,20 +1,21 @@
 <div class="input-container">
-    <input type="text" class="url-input"/>
-    <button class="submit-button">SHORTEN!</button>
+    <input [(ngModel)]="url" type="url" class="url-input"/>
+    <button class="submit-button" (click)="shortenURL()">SHORTEN!</button>
 </div>
 <div class="result-container">
-    <div class="result">
-        <div class="result-url">
-            http://short.ie/iWjSxZ
+    <div class="result" *ngFor="let result of results">
+        <div class="result-url" (click)="goTo(result)">
+            <span>
+                {{result}}
+            </span>
         </div>
-
         <div class="result-option-container">
-            <button class="result-option go-to-url">
+            <button class="result-option go-to-url" (click)="goTo(result)">
                 <span>
                     GO
                 </span>
             </button>
-            <button class="result-option">
+            <button class="result-option" (click)="copyURL(result)">
                 <span>
                     COPY
                 </span>
@@ -25,8 +26,6 @@
                 </span>
             </button>
         </div>
-
     </div>
-
 </div>
 
