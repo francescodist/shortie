@@ -4,18 +4,18 @@
 </div>
 <div class="result-container">
     <div class="result" *ngFor="let result of results">
-        <div class="result-url" (click)="goTo(result)">
+        <div class="result-url" (click)="goTo(result.originalUrl)">
             <span>
-                {{result}}
+                {{result.shortUrl}}
             </span>
         </div>
         <div class="result-option-container">
-            <button class="result-option go-to-url" (click)="goTo(result)">
+            <button class="result-option go-to-url" (click)="goTo(result.originalUrl)">
                 <span>
                     GO
                 </span>
             </button>
-            <button class="result-option" (click)="copyURL(result)">
+            <button class="result-option" (click)="copyURL(result.shortUrl)">
                 <span>
                     COPY
                 </span>

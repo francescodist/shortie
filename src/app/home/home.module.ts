@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule
+        FormsModule,
     ],
     declarations: [HomeComponent, UrlShortenerComponent]
 })

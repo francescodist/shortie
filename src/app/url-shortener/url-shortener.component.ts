@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {UrlService} from '../services/url.service';
 
 @Component({
     selector: 'app-url-shortener',
@@ -7,10 +8,10 @@ import {Component, OnInit} from '@angular/core';
 })
 export class UrlShortenerComponent implements OnInit {
 
-    results: string[]; // an array containing all the shortened URLs
+    results: any[]; // an array containing all the shortened URLs
     url: string; // the URL to shorten
 
-    constructor() {
+    constructor(public urlService: UrlService) {
         this.results = [];
     }
 
@@ -20,7 +21,9 @@ export class UrlShortenerComponent implements OnInit {
 
     shortenURL() {
         if (this.isValidURL()) {
-            this.results.push('http://short.ie/iWjSxZ');
+            this.urlService.shortenURL(this.url).subscribe(data => {
+               this.results.push(data);
+            });
         }
     }
 

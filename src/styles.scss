@@ -9,3 +9,7 @@ body {
 * {
 	color: map_get($colors, darkText);
 }
+
+button:hover {
+	opacity: 0.8;
+}
