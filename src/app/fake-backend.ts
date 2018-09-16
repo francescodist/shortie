@@ -17,8 +17,13 @@ export class FakeBackend implements HttpInterceptor {
         }
 
         // stub for 'shortening URL' API
-        if (request.url === '/shorturl') {
+        if (request.url === '/shorturl' && request.method === 'POST') {
             return this.sendFakeShortenedURL(request.body.originalUrl);
+        }
+
+        // stub for 'deleting short URL' API
+        if (request.url.indexOf('/shorturl') !== -1 && request.method === 'DELETE') {
+            return this.sendFakeDelete();
         }
 
         // if no alternative action is taken, complete the original request
@@ -34,40 +39,29 @@ export class FakeBackend implements HttpInterceptor {
      */
     sendFakeShortenedURL(originalUrl: string): Observable<HttpEvent<any>> {
 
-        // creates a fake delay for the request (min:300ms max:2000ms)
-        const delay = Math.floor((Math.random() * 1700) + 300);
+        // generates randomly an error for 'invalid URL'
+        // otherwise it will give a successful response with a fake shortened URL
+        const random = Math.floor(Math.random() * 10);
+        if (random === 2 || random === 7) {
+            const response = new HttpResponse({
+                status: 504,
+                statusText: 'Invalid URL'
+            });
+            return this.sendFakeRequest(response, 'fail');
 
-        // creates a fate http response and returns the relative observable
-        return new Observable<HttpEvent<any>>(observer => {
+        } else {
+            const response = new HttpResponse({
+                status: 200,
+                body: {
+                    id: Math.floor(Math.random() * 1000000),
+                    originalUrl: originalUrl.substr(0, 4) === 'http' ?
+                        originalUrl : 'http://' + originalUrl,
+                    shortUrl: 'http://short.ie/' + this.randomString(6)
+                }
 
-            // generates randomly an error for 'invalid URL'
-            // otherwise it will give a successful response with a fake shortened URL
-            const random = Math.floor(Math.random() * 10);
-            if (random === 2 || random === 7) {
-                const res = new HttpResponse({
-                    status: 504,
-                    statusText: 'Invalid URL'
-                });
-                setTimeout(() => {
-                    // sends error and completes the request after the delay
-                    observer.error(res);
-                }, delay);
-            } else {
-                const res = new HttpResponse({
-                    status: 200,
-                    body: {
-                        originalUrl: originalUrl.substr(0, 4) === 'http' ?
-                            originalUrl : 'http://' + originalUrl,
-                        shortUrl: 'http://short.ie/' + this.randomString(6)
-                    }
-                });
-                setTimeout(() => {
-                    // send success and completes the request after the delay
-                    observer.next(res);
-                    observer.complete();
-                }, delay);
-            }
-        });
+            });
+            return this.sendFakeRequest(response, 'success');
+        }
     }
 
 
@@ -88,5 +82,37 @@ export class FakeBackend implements HttpInterceptor {
                 return letter;
             })
             .join('');
+    }
+
+
+    sendFakeDelete(): Observable<HttpEvent<any>> {
+        const response = new HttpResponse({
+            status: 200,
+            body: {}
+        });
+        return this.sendFakeRequest(response, 'success');
+    }
+
+
+    sendFakeRequest(payload: any, success: string): Observable<HttpEvent<any>> {
+        // creates a fake delay for the request (min:300ms max:2000ms)
+        const delay = Math.floor((Math.random() * 1700) + 300);
+
+        // creates a fate http response and returns the relative observable
+        return new Observable<HttpEvent<any>>(observer => {
+
+            if (success === 'success') {
+                setTimeout(() => {
+                    // send success and completes the request after the delay
+                    observer.next(payload);
+                    observer.complete();
+                }, delay);
+            } else {
+                setTimeout(() => {
+                    // sends error and completes the request after the delay
+                    observer.error(payload);
+                }, delay);
+            }
+        });
     }
 }

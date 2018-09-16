@@ -14,4 +14,8 @@ export class UrlService {
     shortenURL(url: string): Observable<any> {
         return this.http.post('/shorturl', {originalUrl: url});
     }
+
+    deleteURL(urlId: number): Observable<any> {
+        return this.http.delete('/shorturl/' + urlId);
+    }
 }

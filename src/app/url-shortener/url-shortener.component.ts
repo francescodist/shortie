@@ -10,13 +10,15 @@ export class UrlShortenerComponent implements OnInit {
 
     results: any[]; // an array containing all the shortened URLs
     url: string; // the URL to shorten
-    isLoading: boolean; // true if waiting for a response from server
+    isLoading: boolean; // true if waiting for POST request on short URL
+    isDeleting: boolean[]; // items are true if waiting for DELETE on relative URL
 
     constructor(public urlService: UrlService) {
     }
 
     ngOnInit() {
         this.results = [];
+        this.isDeleting = [];
     }
 
 
@@ -71,6 +73,22 @@ export class UrlShortenerComponent implements OnInit {
         document.execCommand('copy');
         // remove the input element from the view
         input.remove();
+    }
+
+
+    /**
+     * Deletes a shortned URL from the list and from the server
+     * @param {number} urlIndex: the local index of the URL
+     * @param {number} urlId: the ID of the URL
+     */
+    deleteURL(urlIndex: number, urlId: number) {
+        this.isDeleting[urlIndex] = true;
+        this.urlService.deleteURL(urlId).subscribe(() => {
+            // on success delete the element locally aswell
+            this.results.splice(urlIndex, 1);
+        }).add(() => {
+            this.isDeleting[urlIndex] = false;
+        });
     }
 
 
