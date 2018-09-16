@@ -41,7 +41,7 @@ app-url-shortener {
 	
 	.result-container {
 		width: 100%;
-		max-height: 400px;
+		max-height: 404px;
 		margin-top: 20px;
 		border-radius: 5px;
 		overflow: scroll;
@@ -50,10 +50,10 @@ app-url-shortener {
 		
 		.result {
 			width: 100%;
+			height: auto;
 			background-color: map_get($colors, lightListBg);
-			height: 80px;
 			display: flex;
-			position: relative;
+			flex-wrap: wrap;
 			border-top:1px solid darken(map_get($colors, lightListBg), 65);
 			
 			&:first-of-type{
@@ -61,36 +61,55 @@ app-url-shortener {
 			}
 			
 			.result-url {
-				height: 100%;
-				width: 100%;
-				min-width: 0;
+				height: 80px;
+				width: calc(100% - 200px);
+				min-width: 280px;
 				margin: auto 0;
-				padding-left: 20px;
 				text-overflow: clip;
 				cursor: pointer;
+				overflow:hidden;
 				display: flex;
+				flex-direction: column;
+				flex-grow: 1;
+				
 				
 				&:hover {
 					text-decoration: underline;
 				}
 				
-				span{
+				.short-url{
+					height: 40px;
+					max-height: 40px;
+					width: 100%;
 					margin: auto 0;
 					color: map_get($colors, lightListText);
-					font-size: 25px;
+					font-size: 20px;
 					text-decoration: inherit;
+					padding: 15px 0 0 20px;
+				}
+				
+				.original-url {
+					height: 30px;
+					font-size: 14px;
+					line-height: 14px;
+					padding: 0 20px;
+					color: map_get($colors, darkText);
+					text-overflow: ellipsis;
+					overflow: hidden;
 				}
 			}
 			
 			.result-option-container {
-				height: 100%;
+				height: 80px;
 				min-width: 200px;
 				margin: auto 0 auto auto;
 				display: flex;
+				background: green;
+				flex-grow: 1;
 				
 				.result-option {
 					height: 100%;
-					width: 100px;
+					width: 50%;
 					font-size: 15px;
 					background: darken(map_get($colors, lightListBg), 10);
 					border: none;
@@ -103,27 +122,9 @@ app-url-shortener {
 					&.delete-url {
 						background: darken(map_get($colors, lightListBg), 25);
 					}
-					
-					&.go-to-url {
-						display: none;
-						position: absolute;
-						left: 0;
-						width: calc(100% - 200px);
-						background: map_get($colors, lightListBg);
-					}
 				}
 			}
 			
 		}
-	}
-}
-
-@media only screen and (max-width: 680px) {
-	.go-to-url{
-		display: unset !important;
-	}
-	
-	.result-url{
-		display: none !important;
 	}
 }
