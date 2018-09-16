@@ -13,7 +13,7 @@ app-url-shortener {
 	.url-input {
 		height: 100%;
 		width: 80%;
-		font-size: 25px;
+		font-size: 18px;
 		border: none;
 		padding: 0 20px;
 		
@@ -121,5 +121,9 @@ app-url-shortener {
 @media only screen and (max-width: 680px) {
 	.go-to-url{
 		display: unset !important;
+	}
+	
+	.result-url{
+		display: none !important;
 	}
 }

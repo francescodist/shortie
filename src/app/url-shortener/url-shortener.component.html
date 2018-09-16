@@ -1,6 +1,9 @@
 <div class="input-container">
     <input [(ngModel)]="url" type="url" class="url-input"/>
-    <button class="submit-button" (click)="shortenURL()">SHORTEN!</button>
+    <button class="submit-button" (click)="shortenURL()"
+            [disabled]="isLoading">
+        {{ isLoading ? 'SENDING...' : 'SHORTEN!'}}
+    </button>
 </div>
 <div class="result-container">
     <div class="result" *ngFor="let result of results">

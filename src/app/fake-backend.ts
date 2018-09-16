@@ -33,17 +33,27 @@ export class FakeBackend implements HttpInterceptor {
      * @returns {Observable<HttpEvent<any>>}
      */
     sendFakeShortenedURL(originalUrl: string): Observable<HttpEvent<any>> {
+
+        // creates a fake delay for the request (min:300ms max:2000ms)
+        const delay = Math.floor((Math.random() * 1700) + 300);
+
+        // creates a fate http response and returns the relative observable
         return new Observable<HttpEvent<any>>(observer => {
+
+            // generates randomly an error for 'invalid URL'
+            // otherwise it will give a successful response with a fake shortened URL
             const random = Math.floor(Math.random() * 10);
-            let res;
-            if (random === 5) {
-                res = new HttpResponse({
+            if (random === 2 || random === 7) {
+                const res = new HttpResponse({
                     status: 504,
                     statusText: 'Invalid URL'
                 });
-                observer.error(res);
+                setTimeout(() => {
+                    // sends error and completes the request after the delay
+                    observer.error(res);
+                }, delay);
             } else {
-                res = new HttpResponse({
+                const res = new HttpResponse({
                     status: 200,
                     body: {
                         originalUrl: originalUrl.substr(0, 4) === 'http' ?
@@ -51,15 +61,18 @@ export class FakeBackend implements HttpInterceptor {
                         shortUrl: 'http://short.ie/' + this.randomString(6)
                     }
                 });
-                observer.next(res);
+                setTimeout(() => {
+                    // send success and completes the request after the delay
+                    observer.next(res);
+                    observer.complete();
+                }, delay);
             }
-            observer.complete();
         });
     }
 
 
     /**
-     * Simple function to return a random string with letters and numbers
+     * Simple function to return a random alphanumeric string
      * @param {number} length: the length of the final string
      * @returns {string}
      */
