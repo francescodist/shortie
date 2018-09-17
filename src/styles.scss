@@ -1,9 +1,10 @@
 @import "app/home/home.component";
 @import "app/url-shortener/url-shortener.component";
+@import "animations";
 
 body {
 	margin: 0;
-	font-family: Avenir;
+	font-family: Courier;
 }
 
 * {

@@ -6,7 +6,8 @@
     </button>
 </div>
 <div class="result-container">
-    <div class="result" *ngFor="let result of results; let i = index">
+    <div class="result" *ngFor="let result of results"
+         [ngClass]="{'slide-out' : isDeleted[result.id]}">
         <div class="result-url" (click)="goTo(result.originalUrl)">
             <div class="short-url">
                 {{result.shortUrl}}
@@ -21,10 +22,10 @@
                     COPY
                 </span>
             </button>
-            <button class="result-option delete-url" (click)="deleteURL(i, result.id)"
-                    [disabled]="isDeleting[i]">
+            <button class="result-option delete-url" (click)="deleteURL(result.id)"
+                    [disabled]="isDeleting[result.id]">
                 <span>
-                    {{ isDeleting[i] ? 'DELETING...' : 'DELETE'}}
+                    {{ isDeleting[result.id] ? 'DELETING...' : 'DELETE'}}
                 </span>
             </button>
         </div>

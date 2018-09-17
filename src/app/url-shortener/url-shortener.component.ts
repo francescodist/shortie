@@ -11,14 +11,20 @@ export class UrlShortenerComponent implements OnInit {
     results: any[]; // an array containing all the shortened URLs
     url: string; // the URL to shorten
     isLoading: boolean; // true if waiting for POST request on short URL
-    isDeleting: boolean[]; // items are true if waiting for DELETE on relative URL
+    isDeleting: {}; // attributes are IDs of the URL (true if waiting for DELETE)
+    isDeleted: {}; // attributes are IDs of the URL (true if successful DELETE)
 
     constructor(public urlService: UrlService) {
     }
 
+
+    /**
+     * Initialization of the data structures OnInit
+     */
     ngOnInit() {
         this.results = [];
-        this.isDeleting = [];
+        this.isDeleting = {};
+        this.isDeleted = {};
     }
 
 
@@ -81,13 +87,19 @@ export class UrlShortenerComponent implements OnInit {
      * @param {number} urlIndex: the local index of the URL
      * @param {number} urlId: the ID of the URL
      */
-    deleteURL(urlIndex: number, urlId: number) {
-        this.isDeleting[urlIndex] = true;
+    deleteURL(urlId: number) {
+        this.isDeleting[urlId] = true;
         this.urlService.deleteURL(urlId).subscribe(() => {
             // on success delete the element locally aswell
-            this.results.splice(urlIndex, 1);
+            this.isDeleted[urlId] = true;
+            // waits for the animation to be over before deleting the element from the list
+            setTimeout(() => {
+                this.results = this.results.filter(url => {
+                    return url.id !== urlId;
+                });
+            }, 300);
         }).add(() => {
-            this.isDeleting[urlIndex] = false;
+            this.isDeleting[urlId] = false;
         });
     }
 

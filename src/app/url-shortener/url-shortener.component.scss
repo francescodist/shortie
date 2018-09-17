@@ -41,29 +41,34 @@ app-url-shortener {
 	
 	.result-container {
 		width: 100%;
-		max-height: 404px;
+		max-height: 400px;
 		margin-top: 20px;
 		border-radius: 5px;
-		overflow: scroll;
+		overflow: auto;
 		margin-bottom: 20px;
 		
 		
 		.result {
+			animation: slideIn 300ms ease-out;
 			width: 100%;
 			height: auto;
 			background-color: map_get($colors, lightListBg);
 			display: flex;
 			flex-wrap: wrap;
-			border-top:1px solid darken(map_get($colors, lightListBg), 65);
+			outline: 1px solid map_get($colors, lightListBg);;
 			
 			&:first-of-type{
 				border: none;
 			}
 			
+			&.slide-out{
+				animation: slideOut 300ms ease-out;
+			}
+			
 			.result-url {
 				height: 80px;
 				width: calc(100% - 200px);
-				min-width: 280px;
+				min-width: 300px;
 				margin: auto 0;
 				text-overflow: clip;
 				cursor: pointer;
@@ -96,6 +101,7 @@ app-url-shortener {
 					color: map_get($colors, darkText);
 					text-overflow: ellipsis;
 					overflow: hidden;
+					white-space: nowrap;
 				}
 			}
 			
@@ -104,7 +110,6 @@ app-url-shortener {
 				min-width: 200px;
 				margin: auto 0 auto auto;
 				display: flex;
-				background: green;
 				flex-grow: 1;
 				
 				.result-option {
