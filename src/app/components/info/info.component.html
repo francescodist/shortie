@@ -1,0 +1,6 @@
+<div class="info-container" *ngFor="let info of infos"
+     [ngClass]="info.type">
+    <p>
+        {{info.message}}
+    </p>
+</div>

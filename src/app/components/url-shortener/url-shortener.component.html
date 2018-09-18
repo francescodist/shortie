@@ -1,0 +1,34 @@
+<div class="input-container">
+    <input [(ngModel)]="url" type="url" class="url-input"/>
+    <button class="submit-button" (click)="url.length > 0 ? shortenURL() : ''"
+            [disabled]="isLoading">
+        {{ isLoading ? 'SENDING...' : 'SHORTEN!'}}
+    </button>
+</div>
+<div class="result-container" #resultContainer>
+    <div class="result" *ngFor="let result of results"
+         [ngClass]="{'slide-out' : isDeleted[result.id], 'slide-in': result.shouldAnimate}">
+        <div class="result-url" (click)="goTo(result.originalUrl)">
+            <div class="short-url">
+                {{result.shortUrl}}
+            </div>
+            <div class="original-url">
+                {{result.originalUrl}}
+            </div>
+        </div>
+        <div class="result-option-container">
+            <button class="result-option" (click)="copyURL(result.shortUrl)">
+                <span>
+                    COPY
+                </span>
+            </button>
+            <button class="result-option delete-url" (click)="deleteURL(result.id)"
+                    [disabled]="isDeleting[result.id]">
+                <span>
+                    {{ isDeleting[result.id] ? 'DELETING...' : 'DELETE'}}
+                </span>
+            </button>
+        </div>
+    </div>
+</div>
+
