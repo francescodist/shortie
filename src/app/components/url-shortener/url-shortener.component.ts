@@ -1,5 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {UrlService} from '../services/url.service';
+import {UrlService} from '../../services/url.service';
+import {InfoService} from '../../services/info.service';
 
 @Component({
     selector: 'app-url-shortener',
@@ -16,7 +17,7 @@ export class UrlShortenerComponent implements OnInit {
     // container for the shortened URLs in the view
     @ViewChild('resultContainer') resultContainer: ElementRef;
 
-    constructor(public urlService: UrlService) {
+    constructor(public urlService: UrlService, public infoService: InfoService) {
     }
 
 
@@ -36,17 +37,23 @@ export class UrlShortenerComponent implements OnInit {
      */
     shortenURL() {
         if (this.isValidURL()) {
+            // stop other 'shorten URL' requests until isLoading is true
             this.isLoading = true;
             this.urlService.shortenURL(this.url).subscribe(
                 data => {
+                    // scroll top to show the animation for the new item
                     this.resultContainer.nativeElement.scrollTo(0, 0);
                     this.results.unshift(data);
                 }, error => {
-                    alert(error.statusText);
+                    this.infoService.showError(error.statusText);
                 }
             ).add(() => {
+                // done, allow requests again
                 this.isLoading = false;
             });
+        }
+        else {
+            this.infoService.showError('Invalid URL');
         }
     }
 
@@ -82,6 +89,8 @@ export class UrlShortenerComponent implements OnInit {
         document.execCommand('copy');
         // remove the input element from the view
         input.remove();
+        // show info about URL copied to clipboard
+        this.infoService.showInfo('Copied to Clipboard!');
     }
 
 

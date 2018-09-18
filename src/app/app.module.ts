@@ -5,10 +5,12 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FakeBackend} from './fake-backend';
+import {InfoComponent} from './components/info/info.component';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        InfoComponent
     ],
     imports: [
         BrowserModule,

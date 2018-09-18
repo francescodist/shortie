@@ -1,6 +1,6 @@
 <div class="input-container">
     <input [(ngModel)]="url" type="url" class="url-input"/>
-    <button class="submit-button" (click)="shortenURL()"
+    <button class="submit-button" (click)="url.length > 0 ? shortenURL() : ''"
             [disabled]="isLoading">
         {{ isLoading ? 'SENDING...' : 'SHORTEN!'}}
     </button>

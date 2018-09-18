@@ -1,4 +1,4 @@
-@import "../../variables";
+@import "../../../theme/variables";
 
 app-url-shortener {
 	
@@ -44,7 +44,8 @@ app-url-shortener {
 		max-height: 400px;
 		margin-top: 20px;
 		border-radius: 5px;
-		overflow: auto;
+		overflow-y: auto;
+		overflow-x: hidden;
 		margin-bottom: 20px;
 		
 		

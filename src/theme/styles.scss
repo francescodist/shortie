@@ -1,0 +1,17 @@
+@import "../app/pages/home/home.component";
+@import "../app/components/url-shortener/url-shortener.component";
+@import "../app/components/info/info.component";
+@import "animations";
+
+body {
+	margin: 0;
+	font-family: Courier;
+}
+
+* {
+	color: map_get($colors, darkText);
+}
+
+button:hover {
+	opacity: 0.8;
+}

@@ -1,0 +1,28 @@
+@import "../../../theme/variables";
+
+app-info{
+	position: fixed;
+	bottom: 0;
+	height: 100px;
+	width: 100%;
+	
+	.info-container {
+		position: absolute;
+		bottom: -100%;
+		width: 100%;
+		height: 100%;
+		animation: slideInFadeOut 3s ease-out 0s forwards;
+		display: flex;
+		background: map_get($colors, secondary);
+		
+		&.error {
+			background: map_get($colors, danger);
+		}
+		
+		p {
+			margin: auto;
+			font-size: 18px;
+		}
+	}
+}
+

@@ -1,0 +1,37 @@
+
+@keyframes slideIn {
+	from {
+		transform: translate3d(0,-100%,0) scale3d(0.3, 0.3, 0.3);
+	}
+	to {
+		transform: translate3d(0,0,0) scale3d(1, 1, 1);
+	}
+}
+
+@keyframes slideOut {
+	from {
+		transform: translate3d(0, 0, 0);
+	}
+	to {
+		transform: translate3d(100%, 0, 0);
+	}
+}
+
+@keyframes slideInFadeOut {
+	0% {
+		opacity: 1.0;
+		transform: translate3d(0, 0, 0);
+	}
+	5% {
+		opacity: 1.0;
+		transform: translate3d(0, -100%, 0);
+	}
+	90% {
+		opacity: 1.0;
+		transform: translate3d(0, -100%, 0);
+	}
+	100% {
+		opacity: 0.0;
+		transform: translate3d(0, -100%, 0);
+	}
+}

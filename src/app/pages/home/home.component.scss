@@ -1,4 +1,4 @@
-@import "../../variables";
+@import "../../../theme/variables";
 
 app-home {
 	.main-content {
@@ -17,7 +17,7 @@ app-home {
 	.url-shortener-container{
 		width: 70%;
 		height: 100%;
-		min-width: 280px;
+		min-width: 300px;
 		margin: 50px auto 0 auto;
 	}
 }
