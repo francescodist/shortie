@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {UrlService} from '../services/url.service';
 
 @Component({
@@ -13,6 +13,8 @@ export class UrlShortenerComponent implements OnInit {
     isLoading: boolean; // true if waiting for POST request on short URL
     isDeleting: {}; // attributes are IDs of the URL (true if waiting for DELETE)
     isDeleted: {}; // attributes are IDs of the URL (true if successful DELETE)
+    // container for the shortened URLs in the view
+    @ViewChild('resultContainer') resultContainer: ElementRef;
 
     constructor(public urlService: UrlService) {
     }
@@ -22,7 +24,7 @@ export class UrlShortenerComponent implements OnInit {
      * Initialization of the data structures OnInit
      */
     ngOnInit() {
-        this.results = [];
+        this.results = this.urlService.getAllURLs();
         this.isDeleting = {};
         this.isDeleted = {};
     }
@@ -37,6 +39,7 @@ export class UrlShortenerComponent implements OnInit {
             this.isLoading = true;
             this.urlService.shortenURL(this.url).subscribe(
                 data => {
+                    this.resultContainer.nativeElement.scrollTo(0, 0);
                     this.results.unshift(data);
                 }, error => {
                     alert(error.statusText);
@@ -95,6 +98,7 @@ export class UrlShortenerComponent implements OnInit {
             // waits for the animation to be over before deleting the element from the list
             setTimeout(() => {
                 this.results = this.results.filter(url => {
+                    delete this.isDeleted[urlId];
                     return url.id !== urlId;
                 });
             }, 300);

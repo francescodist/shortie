@@ -42,7 +42,7 @@ export class FakeBackend implements HttpInterceptor {
         // generates randomly an error for 'invalid URL'
         // otherwise it will give a successful response with a fake shortened URL
         const random = Math.floor(Math.random() * 10);
-        if (random === 2 || random === 7) {
+        if (random === 7) {
             const response = new HttpResponse({
                 status: 504,
                 statusText: 'Invalid URL'

@@ -49,7 +49,6 @@ app-url-shortener {
 		
 		
 		.result {
-			animation: slideIn 300ms ease-out;
 			width: 100%;
 			height: auto;
 			background-color: map_get($colors, lightListBg);
@@ -61,8 +60,12 @@ app-url-shortener {
 				border: none;
 			}
 			
+			&.slide-in{
+				animation: slideIn 300ms ease-out;
+			}
+			
 			&.slide-out{
-				animation: slideOut 300ms ease-out;
+				animation: slideOut 300ms ease-out !important;
 			}
 			
 			.result-url {
