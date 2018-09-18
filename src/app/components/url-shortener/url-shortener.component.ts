@@ -42,7 +42,7 @@ export class UrlShortenerComponent implements OnInit {
             this.urlService.shortenURL(this.url).subscribe(
                 data => {
                     // scroll top to show the animation for the new item
-                    this.resultContainer.nativeElement.scrollTo(0, 0);
+                    this.resultContainer.nativeElement.scrollTop = 0;
                     this.results.unshift(data);
                 }, error => {
                     this.infoService.showError(error.statusText);
