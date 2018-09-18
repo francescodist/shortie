@@ -8,7 +8,8 @@ import {FormsModule} from '@angular/forms';
         CommonModule,
         FormsModule,
     ],
-    declarations: [UrlShortenerComponent]
+    declarations: [UrlShortenerComponent],
+    exports: [UrlShortenerComponent]
 })
 export class UrlShortenerModule {
 }
